@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07090d">
+  <title>Veil of Ash - D&amp;D Browser RPG</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell" id="app" data-state="MAIN_MENU">
+    <header class="topbar" aria-label="Панель кампании">
+      <a class="brand" href="#" data-action="main-menu" aria-label="Veil of Ash">
+        <span class="brand__sigil" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <path d="M24 4 39 11v11c0 10-6 18-15 22C15 40 9 32 9 22V11L24 4Z"/>
+            <path d="M24 11v27M15 19h18M18 28h12"/>
+          </svg>
+        </span>
+        <span class="brand__copy">
+          <strong>Veil of Ash</strong>
+          <small>single page D&amp;D run</small>
+        </span>
+      </a>
+
+      <nav class="quick-tabs" aria-label="Игровые экраны">
+        <button type="button" data-nav-screen="MAIN_MENU">Меню</button>
+        <button type="button" data-nav-screen="CHARACTER_SELECT">Герой</button>
+        <button type="button" data-nav-screen="WORLD_MAP">Карта</button>
+      </nav>
+
+      <div class="campaign-status" aria-label="Статус кампании">
+        <span class="status-pill status-pill--safe" id="hud-act">Акт I</span>
+        <span class="status-pill" id="hud-floor">Путь 0/11</span>
+        <span class="status-pill status-pill--danger" id="hud-threat">Угроза 2</span>
+      </div>
+    </header>
+
+    <main class="game-root">
+      <section class="screen screen--menu is-active" id="screen-main-menu" data-screen="MAIN_MENU" aria-labelledby="main-menu-title">
+        <div class="menu-hero panel">
+          <div class="menu-art" aria-hidden="true">
+            <svg viewBox="0 0 720 520" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="menuSky" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#263141"/>
+                  <stop offset="0.55" stop-color="#10151d"/>
+                  <stop offset="1" stop-color="#422922"/>
+                </linearGradient>
+                <filter id="menuGrain">
+                  <feTurbulence baseFrequency="0.72" numOctaves="3" seed="21"/>
+                  <feColorMatrix type="saturate" values="0.18"/>
+                  <feComponentTransfer>
+                    <feFuncA type="table" tableValues="0 0.16"/>
+                  </feComponentTransfer>
+                </filter>
+              </defs>
+              <rect width="720" height="520" fill="url(#menuSky)"/>
+              <rect width="720" height="520" filter="url(#menuGrain)"/>
+              <path d="M0 398c82-76 148-86 250-36 82 40 152 27 226-38 88-76 167-83 244-21v217H0V398Z" fill="#141b25"/>
+              <path d="M354 91 462 409H245L354 91Z" fill="#1d2633"/>
+              <path d="M355 129 418 403H292l63-274Z" fill="#2d3747"/>
+              <path d="M354 86v319" stroke="#f0c978" stroke-width="12" stroke-linecap="round"/>
+              <path d="M269 231h172" stroke="#f0c978" stroke-width="12" stroke-linecap="round"/>
+              <path d="M118 425c52-64 118-91 197-80M462 350c58-12 103 8 135 60" stroke="#6bc4d6" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.7"/>
+            </svg>
+          </div>
+          <div class="menu-copy">
+            <p class="eyebrow">Кампания D&amp;D</p>
+            <h1 id="main-menu-title">Санктуарий Тьмы увядает</h1>
+            <p>Старый Дракон-Лич Астерон проснулся в Сердце Горы. Его пепельное дыхание сушит реки, гасит храмы и поднимает мертвых на старых дорогах. Три искателя приключений могут стать последним заслоном.</p>
+            <div class="menu-actions">
+              <button class="button button--primary" type="button" data-action="new-game">Начать игру</button>
+              <button class="button" type="button" data-action="continue-game">Продолжить</button>
+              <button class="button button--ghost" type="button" data-action="credits">Титры</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen screen--character hidden" id="screen-character-select" data-screen="CHARACTER_SELECT" aria-labelledby="character-title">
+        <section class="panel lore-panel">
+          <div class="panel__header">
+            <div>
+              <p class="eyebrow">Выбор героя</p>
+              <h1 id="character-title">Кто войдет в пепельный тракт?</h1>
+            </div>
+            <button class="button button--primary" type="button" data-action="confirm-hero">Выйти на карту</button>
+          </div>
+          <div class="lore-body">
+            <div class="hero-portrait">
+              <div class="portrait-frame">
+                <svg class="portrait portrait--fighter is-active" data-portrait="fighter" viewBox="0 0 420 520" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="fighterBg" x1="0" x2="1" y1="0" y2="1">
+                      <stop offset="0" stop-color="#2a313d"/>
+                      <stop offset="0.55" stop-color="#131923"/>
+                      <stop offset="1" stop-color="#6b3d2f"/>
+                    </linearGradient>
+                    <linearGradient id="fighterSteel" x1="0" x2="1" y1="0" y2="1">
+                      <stop offset="0" stop-color="#e1e7ed"/>
+                      <stop offset="1" stop-color="#5f6c7b"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="420" height="520" rx="26" fill="url(#fighterBg)"/>
+                  <path d="M52 422c38-108 90-162 156-162s121 54 160 162" fill="#1d2633"/>
+                  <path d="M91 446c20-126 57-189 117-189s97 63 117 189" fill="url(#fighterSteel)"/>
+                  <path d="M119 217c17-74 164-74 181 0l-39 102H158l-39-102Z" fill="#c7cdd4"/>
+                  <path d="M139 197 210 84l71 113-35 58h-72l-35-58Z" fill="#818d9a"/>
+                  <path d="M210 104v178M156 205h108" stroke="#f1cd78" stroke-width="14" stroke-linecap="round"/>
+                  <path d="M80 392 315 157" stroke="#d6a65b" stroke-width="18" stroke-linecap="round"/>
+                  <path d="M282 125h62v62" stroke="#f3d88d" stroke-width="13" fill="none" stroke-linecap="round"/>
+                </svg>
+                <svg class="portrait portrait--mage" data-portrait="mage" viewBox="0 0 420 520" aria-hidden="true">
+                  <defs>
+                    <radialGradient id="mageBg" cx="50%" cy="32%" r="72%">
+                      <stop offset="0" stop-color="#7de5ff"/>
+                      <stop offset="0.24" stop-color="#294c72"/>
+                      <stop offset="1" stop-color="#111422"/>
+                    </radialGradient>
+                    <linearGradient id="mageRobe" x1="0" x2="1" y1="0" y2="1">
+                      <stop offset="0" stop-color="#31416c"/>
+                      <stop offset="1" stop-color="#151a30"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="420" height="520" rx="26" fill="url(#mageBg)"/>
+                  <path d="M58 438c22-118 73-181 152-181s130 63 152 181" fill="url(#mageRobe)"/>
+                  <path d="M118 218 210 60l92 158-45 100h-94l-45-100Z" fill="#1f2a4c"/>
+                  <circle cx="210" cy="210" r="43" fill="#d9f7ff"/>
+                  <circle cx="210" cy="210" r="88" fill="none" stroke="#7de5ff" stroke-width="5" opacity="0.5"/>
+                  <path d="M104 392c56-62 156-62 212 0" stroke="#72f0cc" stroke-width="14" fill="none" stroke-linecap="round"/>
+                  <path d="M210 302v136" stroke="#9deaff" stroke-width="18" stroke-linecap="round"/>
+                </svg>
+                <svg class="portrait portrait--rogue" data-portrait="rogue" viewBox="0 0 420 520" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="rogueBg" x1="0" x2="1" y1="0" y2="1">
+                      <stop offset="0" stop-color="#273142"/>
+                      <stop offset="0.58" stop-color="#0d1119"/>
+                      <stop offset="1" stop-color="#2f493f"/>
+                    </linearGradient>
+                    <linearGradient id="rogueCloak" x1="0" x2="1" y1="0" y2="1">
+                      <stop offset="0" stop-color="#38455a"/>
+                      <stop offset="1" stop-color="#12161f"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="420" height="520" rx="26" fill="url(#rogueBg)"/>
+                  <path d="M63 446c29-126 78-189 147-189s118 63 147 189" fill="url(#rogueCloak)"/>
+                  <path d="M102 218c45-91 171-91 216 0l-56 101H158l-56-101Z" fill="#1b2330"/>
+                  <path d="M147 211h126" stroke="#d6a65b" stroke-width="14" stroke-linecap="round"/>
+                  <path d="M93 407 301 199" stroke="#dbe5ef" stroke-width="17" stroke-linecap="round"/>
+                  <path d="M280 165h59v59" stroke="#f2c76b" stroke-width="13" fill="none" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="hero-summary">
+                <p class="eyebrow">Предыстория</p>
+                <h2 id="hero-class-title">Воин Зольного Тракта</h2>
+                <p id="hero-class-copy">Рыцарь павшего бастиона, который несет треснувший щит своего ордена.</p>
+                <div class="hero-stats">
+                  <span><b id="stat-hp">14</b> HP</span>
+                  <span><b id="stat-ac">16</b> AC</span>
+                  <span><b id="stat-gold">42</b> gp</span>
+                  <span><b id="stat-relic">Щит Пепла</b> реликвия</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="builder-console">
+              <div class="class-grid" aria-label="Классы героя">
+                <article class="class-card is-selected" data-class="fighter" tabindex="0">
+                  <span class="class-card__crest" aria-hidden="true">
+                    <svg viewBox="0 0 64 64"><path d="M32 6 50 15v15c0 13-7 23-18 28C21 53 14 43 14 30V15L32 6Z"/><path d="M32 14v36M22 27h20"/></svg>
+                  </span>
+                  <div>
+                    <h3>Воин</h3>
+                    <p>Броня, оружие, маневры и надежная защита группы.</p>
+                  </div>
+                </article>
+                <article class="class-card" data-class="mage" tabindex="0">
+                  <span class="class-card__crest" aria-hidden="true">
+                    <svg viewBox="0 0 64 64"><path d="M32 5 48 30 37 56H27L16 30 32 5Z"/><circle cx="32" cy="30" r="8"/><path d="M14 47c12-10 24-10 36 0"/></svg>
+                  </span>
+                  <div>
+                    <h3>Маг</h3>
+                    <p>Контроль поля, риск концентрации и всплески тайной силы.</p>
+                  </div>
+                </article>
+                <article class="class-card" data-class="rogue" tabindex="0">
+                  <span class="class-card__crest" aria-hidden="true">
+                    <svg viewBox="0 0 64 64"><path d="M17 48 47 18"/><path d="M41 12h11v11"/><path d="M20 24c8-13 25-13 33 0L42 44H28L20 24Z"/><path d="M24 26h16"/></svg>
+                  </span>
+                  <div>
+                    <h3>Плут</h3>
+                    <p>Скрытность, ловушки, критические удары и рискованные сделки.</p>
+                  </div>
+                </article>
+              </div>
+
+              <section class="subclass-showcase" aria-labelledby="subclasses-title">
+                <div class="panel__header panel__header--compact">
+                  <div>
+                    <p class="eyebrow">Подклассы</p>
+                    <h2 id="subclasses-title">Выберите тактическую роль</h2>
+                  </div>
+                  <span class="status-pill">Выбран: <b id="selected-subclass">Чемпион</b></span>
+                </div>
+                <div class="subclass-grid" id="subclass-grid"></div>
+              </section>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="screen screen--map hidden" id="screen-world-map" data-screen="WORLD_MAP" aria-labelledby="world-map-title">
+        <div class="hud-strip" aria-label="Сводка прохождения">
+          <article class="hud-card">
+            <span class="hud-card__label">Герой</span>
+            <strong id="hero-name">Воин - Чемпион</strong>
+            <div class="meter"><span id="hero-hp-meter" style="width: 100%"></span></div>
+          </article>
+          <article class="hud-card">
+            <span class="hud-card__label">Здоровье</span>
+            <strong id="hero-hp-text">14 / 14</strong>
+            <small>Лечение доступно у костра</small>
+          </article>
+          <article class="hud-card">
+            <span class="hud-card__label">Золото</span>
+            <strong id="hero-gold">42 gp</strong>
+            <small id="hero-relics">Реликвия: Щит Пепла</small>
+          </article>
+          <article class="hud-card hud-card--danger">
+            <span class="hud-card__label">Цель</span>
+            <strong>Сердце Горы</strong>
+            <small>Добраться до босса на вершине</small>
+          </article>
+        </div>
+
+        <section class="panel world-map-panel">
+          <div class="panel__header">
+            <div>
+              <p class="eyebrow">Карта как Slay the Spire</p>
+              <h1 id="world-map-title">Путь к Сердцу Горы</h1>
+            </div>
+            <button class="button button--ghost" type="button" data-action="reset-run">Новая карта</button>
+          </div>
+          <div class="map-stage" id="map-stage" aria-label="Процедурная карта">
+            <svg class="map-lines" id="map-lines" viewBox="0 0 1000 1120" preserveAspectRatio="none" aria-hidden="true"></svg>
+            <div class="map-nodes" id="map-nodes"></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="screen screen--encounter hidden" id="screen-encounter" data-screen="ENCOUNTER" aria-labelledby="encounter-title">
+        <section class="panel encounter-panel">
+          <div class="panel__header">
+            <div>
+              <p class="eyebrow" id="encounter-kicker">Встреча</p>
+              <h1 id="encounter-title">Событие</h1>
+            </div>
+            <button class="button button--ghost" type="button" data-action="back-to-map">К карте</button>
+          </div>
+          <div class="encounter-layout">
+            <div class="encounter-art" id="encounter-art" aria-hidden="true"></div>
+            <div class="encounter-copy">
+              <div class="dm-window" role="log" aria-live="polite">
+                <p class="typewriter" id="dm-text">DM ожидает вашего решения.</p>
+              </div>
+              <div class="encounter-rewards" id="encounter-rewards"></div>
+              <div class="encounter-actions" id="encounter-actions"></div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="screen screen--ending hidden" id="screen-game-over" data-screen="GAME_OVER" aria-labelledby="game-over-title">
+        <div class="ending-card panel">
+          <p class="eyebrow">Конец пути</p>
+          <h1 id="game-over-title">Пепел стал тише</h1>
+          <p>Отряд пал на дороге к Сердцу Горы. Но в D&amp;D даже смерть часто оставляет след, зацепку или проклятую клятву.</p>
+          <button class="button button--primary" type="button" data-action="new-game">Начать заново</button>
+        </div>
+      </section>
+
+      <section class="screen screen--ending hidden" id="screen-victory" data-screen="VICTORY" aria-labelledby="victory-title">
+        <div class="ending-card panel">
+          <p class="eyebrow">Победа</p>
+          <h1 id="victory-title">Дракон-Лич отступил в пепел</h1>
+          <p>Санктуарий Тьмы еще не исцелен, но рассвет вернулся на вершины. Следующая глава может начинаться.</p>
+          <button class="button button--primary" type="button" data-action="new-game">Новая кампания</button>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
